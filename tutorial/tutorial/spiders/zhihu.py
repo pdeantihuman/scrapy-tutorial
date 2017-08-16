@@ -16,6 +16,7 @@ class ZhihuSpider(scrapy.Spider):
     follows_url = 'https://www.zhihu.com/api/v4/members/{user}/followees?include={include}&offset={offset}&limit={limit}'
     follows_query = 'data[*].answer_count,articles_count,gender,follower_count,is_followed,is_following,badge[?(type=best_answerer)].topics'
 
+
     def start_requests(self):
         yield scrapy.Request(self.user_url.format(user=self.start_user, include=self.user_query),
                              callback=self.parse_user)
@@ -30,7 +31,9 @@ class ZhihuSpider(scrapy.Spider):
             if field in result.keys():
                 item[field] = result.get(field)
         yield item
-        # yield scrapy.Request(self.follows_url.format(user=result.get('user_token'),include=self.follows_query,limit=20,offset=0),self.parse_follows())
+        # yield scrapy.Request(
+        #     self.follows_url.format(user=result.get('user_token'), include=self.follows_query, limit=20, offset=0),
+        #     self.parse_follows)
 
     def parse_follows(self, response):
         results = json.loads(response.text)

@@ -13,4 +13,5 @@ class UserItem(Item):
     # name = scrapy.Field()
     url_token = Field()
     answer_count = Field()
-
+    name = Field()
+    follower_count = Field()
